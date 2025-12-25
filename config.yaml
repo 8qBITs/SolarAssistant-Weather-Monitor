@@ -1,0 +1,46 @@
+app:
+  name: "Solar Pi Control"
+  secret_key: "CHANGE_ME_TO_A_LONG_RANDOM_STRING"
+  timezone: "Europe/Ljubljana"
+
+mqtt:
+  host: "192.168.0.32"
+  port: 1883
+  username: null
+  password: null
+  tls: false
+  state_topic_prefix: "solar_assistant"
+  subscribe_filter: "solar_assistant/#"
+
+weather:
+  arso_url: "https://meteo.arso.gov.si/uploads/probase/www/fproduct/text/sl/fcast_SI_SAVINJSKA_latest.xml"
+  location_label: "Nova Cerkev, Vojnik"
+  poll_minutes: 30
+
+  # winter PV-bad rule:
+  # trigger if tomorrow contains ANY of these
+  charge_if: ["rain", "snow", "fog", "overcast"]
+
+  slovene_keywords:
+    rain: ["dež", "plohe", "nevihte", "nalivi"]
+    snow: ["sneg", "sneženje", "snež"]
+    fog:  ["megla", "megleno"]
+    overcast: ["oblačno", "pretežno oblačno"]
+
+schedule:
+  cheap_start: "22:10"
+  cheap_end: "05:50"
+  rainy_grid_charge_amps: 30
+  normal_grid_charge_amps: 0
+
+control:
+  enabled: true
+  dry_run: false # SANDBOX ZA PAYLOAD
+  
+  topics:
+    charger_source_priority: "solar_assistant/{inverter}/charger_source_priority/set"
+    max_grid_charge_current: "solar_assistant/{inverter}/max_grid_charge_current/set"
+
+  payloads:
+    charger_solar_only: "Solar only"
+    charger_solar_utility: "Solar and utility simultaneously"

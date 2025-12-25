@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-slate-900 rounded-2xl p-5 border border-slate-800">
+  <div class="text-lg font-semibold">Settings</div>
+  <div class="text-slate-400 text-sm mt-1">Basic safe toggles. Edit config.yaml for full control.</div>
+
+  <div class="mt-4">
+    <div class="text-slate-400 text-sm">Dry run (don’t publish MQTT commands)</div>
+    <form method="post" action="/settings/dryrun" class="flex items-center gap-2 mt-2">
+      <select name="dry_run" class="px-3 py-2 rounded-lg bg-slate-800 border border-slate-700">
+        <option value="true" {% if dry_run %}selected{% endif %}>true</option>
+        <option value="false" {% if not dry_run %}selected{% endif %}>false</option>
+      </select>
+      <button class="px-3 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-sm font-semibold">Save</button>
+    </form>
+  </div>
+
+  <div class="mt-6 text-xs text-slate-400">
+    MQTT host: <span class="text-slate-200">{{ cfg.mqtt.host }}</span><br>
+    ARSO url: <span class="text-slate-200 break-all">{{ cfg.weather.arso_url }}</span><br>
+    Triggers: <span class="text-slate-200">overcast/rain/snow/fog</span>
+  </div>
+</div>
+{% endblock %}

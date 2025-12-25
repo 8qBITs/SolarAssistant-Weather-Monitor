@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-slate-900 rounded-2xl p-5 border border-slate-800">
+  <div class="text-lg font-semibold">Totals</div>
+  <div class="grid md:grid-cols-5 gap-3 mt-3 text-sm">
+    <div class="bg-slate-950 rounded-xl p-3 border border-slate-800">Grid W<br><span class="text-xl font-bold">{{ total.grid_power }}</span></div>
+    <div class="bg-slate-950 rounded-xl p-3 border border-slate-800">PV W<br><span class="text-xl font-bold">{{ total.pv_power }}</span></div>
+    <div class="bg-slate-950 rounded-xl p-3 border border-slate-800">Load W<br><span class="text-xl font-bold">{{ total.load_power }}</span></div>
+    <div class="bg-slate-950 rounded-xl p-3 border border-slate-800">Batt W<br><span class="text-xl font-bold">{{ total.battery_power }}</span></div>
+    <div class="bg-slate-950 rounded-xl p-3 border border-slate-800">SOC %<br><span class="text-xl font-bold">{{ total.soc }}</span></div>
+  </div>
+</div>
+
+<div class="grid md:grid-cols-3 gap-4 mt-4">
+  {% for inv in inverters %}
+  <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800">
+    <div class="text-lg font-semibold">{{ inv.id }}</div>
+    <div class="grid grid-cols-2 gap-3 mt-3 text-sm">
+      <div class="bg-slate-950 rounded-xl p-3 border border-slate-800">Grid W<br><span class="text-xl font-bold">{{ inv.grid_power }}</span></div>
+      <div class="bg-slate-950 rounded-xl p-3 border border-slate-800">PV W<br><span class="text-xl font-bold">{{ inv.pv_power }}</span></div>
+      <div class="bg-slate-950 rounded-xl p-3 border border-slate-800">Load W<br><span class="text-xl font-bold">{{ inv.load_power }}</span></div>
+      <div class="bg-slate-950 rounded-xl p-3 border border-slate-800">Batt V<br><span class="text-xl font-bold">{{ inv.battery_voltage }}</span></div>
+      <div class="bg-slate-950 rounded-xl p-3 border border-slate-800">Batt A<br><span class="text-xl font-bold">{{ inv.battery_current }}</span></div>
+      <div class="bg-slate-950 rounded-xl p-3 border border-slate-800">Grid A limit<br><span class="text-xl font-bold">{{ inv.max_grid_charge_current }}</span></div>
+    </div>
+    <div class="mt-3 text-xs text-slate-400">
+      Charger priority: <span class="text-slate-200">{{ inv.charger_source_priority }}</span>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

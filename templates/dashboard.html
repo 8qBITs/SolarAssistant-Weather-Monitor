@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="grid md:grid-cols-3 gap-4">
+  <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800">
+    <div class="text-slate-400 text-sm">Location</div>
+    <div class="text-lg font-semibold">{{ weather.location if weather else "—" }}</div>
+    <div class="text-slate-400 text-xs mt-2">ARSO</div>
+    <div class="text-slate-300 text-xs break-all">{{ weather.source_url if weather else "—" }}</div>
+  </div>
+
+  <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800">
+    <div class="text-slate-400 text-sm">Bad PV tomorrow?</div>
+    <div class="text-3xl font-bold mt-1">
+      {% if bad.value %}<span class="text-amber-300">YES</span>{% else %}<span class="text-emerald-300">NO</span>{% endif %}
+    </div>
+    <div class="text-slate-400 text-xs mt-2">
+      Triggers: overcast/oblačno, rain/dež, snow/sneg, fog/megla
+    </div>
+  </div>
+
+  <div class="bg-slate-900 rounded-2xl p-5 border border-slate-800">
+    <div class="text-slate-400 text-sm">Automation</div>
+    <div class="mt-2 flex items-center gap-2">
+      {% if auto_enabled %}
+        <span class="px-2 py-1 rounded-lg bg-emerald-900/40 border border-emerald-700 text-emerald-200 text-sm">Enabled</span>
+      {% else %}
+        <span class="px-2 py-1 rounded-lg bg-red-900/40 border border-red-700 text-red-200 text-sm">Disabled</span>
+      {% endif %}
+      {% if dry_run %}
+        <span class="px-2 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-200 text-sm">DRY RUN</span>
+      {% endif %}
+    </div>
+    <div class="text-slate-400 text-xs mt-3">
+      Cheap window: <span class="text-slate-200">{{ cheap_start }} → {{ cheap_end }}</span>
+    </div>
+    <div class="text-slate-400 text-xs mt-1">
+      Last applied: <span class="text-slate-200">{{ last_applied.ts if last_applied else "—" }}</span>
+    </div>
+  </div>
+</div>
+
+<div class="mt-6 bg-slate-900 rounded-2xl p-5 border border-slate-800">
+  <div class="flex items-center justify-between">
+    <div>
+      <div class="text-lg font-semibold">Decision</div>
+      <div class="text-slate-400 text-xs">Fetched: {{ weather.fetched_at if weather else "—" }}</div>
+    </div>
+    <a class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm" href="/weather">View details</a>
+  </div>
+
+  <div class="mt-3 text-sm text-slate-200">
+    <div class="text-slate-400 text-xs mb-1">Reason</div>
+    <div class="text-slate-200">{{ bad.reason if bad else "—" }}</div>
+  </div>
+</div>
+{% endblock %}

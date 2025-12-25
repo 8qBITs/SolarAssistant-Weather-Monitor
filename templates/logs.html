@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-slate-900 rounded-2xl p-5 border border-slate-800">
+  <div class="text-lg font-semibold">Audit log</div>
+  <div class="text-slate-400 text-sm mt-1">Latest actions and automation events.</div>
+
+  <div class="mt-4 overflow-auto">
+    <table class="w-full text-sm">
+      <thead class="text-slate-400">
+        <tr>
+          <th class="text-left p-2">Time</th>
+          <th class="text-left p-2">User</th>
+          <th class="text-left p-2">Action</th>
+          <th class="text-left p-2">Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in logs %}
+        <tr class="border-t border-slate-800">
+          <td class="p-2 text-slate-300">{{ row.ts }}</td>
+          <td class="p-2 text-slate-300">{{ row.username or "—" }}</td>
+          <td class="p-2 text-slate-200 font-medium">{{ row.action }}</td>
+          <td class="p-2 text-slate-400">{{ row.detail }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

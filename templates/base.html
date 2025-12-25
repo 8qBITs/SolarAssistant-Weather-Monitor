@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ app }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+  <div class="max-w-6xl mx-auto p-4">
+    <div class="flex items-center justify-between py-3">
+      <div class="text-xl font-semibold">{{ app }}</div>
+
+      {% if username %}
+      <div class="flex items-center gap-3">
+        <div class="text-sm text-slate-300">{{ username }}</div>
+        <form method="post" action="/logout">
+          <button class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm">Logout</button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+
+    {% if username %}
+    <nav class="flex gap-2 flex-wrap mb-4">
+      <a class="px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-sm" href="/dashboard">Dashboard</a>
+      <a class="px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-sm" href="/control">Control</a>
+      <a class="px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-sm" href="/inverters">Inverters</a>
+      <a class="px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-sm" href="/weather">Weather</a>
+      <a class="px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-sm" href="/logs">Logs</a>
+      <a class="px-3 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-sm" href="/settings">Settings</a>
+    </nav>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

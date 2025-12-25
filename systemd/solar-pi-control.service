@@ -1,0 +1,15 @@
+[Unit]
+Description=Solar Pi Control (ARSO + MQTT)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/solar-pi-control
+Environment=SPC_DB=/home/pi/solar-pi-control/solar_pi_control.db
+ExecStart=/home/pi/solar-pi-control/.venv/bin/python /home/pi/solar-pi-control/app.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

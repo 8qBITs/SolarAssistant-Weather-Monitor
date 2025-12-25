@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="bg-slate-900 rounded-2xl p-5 border border-slate-800">
+  <div class="flex items-center justify-between">
+    <div>
+      <div class="text-lg font-semibold">ARSO forecast</div>
+      <div class="text-slate-400 text-sm">{{ weather.location if weather else "—" }}</div>
+      <div class="text-slate-400 text-xs mt-1">Fetched: {{ weather.fetched_at if weather else "—" }}</div>
+    </div>
+    <form method="post" action="/weather/refresh">
+      <button class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm">Refresh now</button>
+    </form>
+  </div>
+
+  <div class="mt-4">
+    <div class="text-slate-400 text-sm">Bad PV tomorrow?</div>
+    <div class="text-3xl font-bold">
+      {% if bad.value %}<span class="text-amber-300">YES</span>{% else %}<span class="text-emerald-300">NO</span>{% endif %}
+    </div>
+    <div class="text-slate-400 text-xs mt-2">Reason: {{ bad.reason if bad else "—" }}</div>
+  </div>
+
+  <div class="mt-6">
+    <div class="text-slate-400 text-sm mb-2">Tomorrow blocks (parsed)</div>
+    <pre class="bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs overflow-auto">
+{{ (weather.summary.tomorrow_blocks if weather and weather.summary else []) | tojson }}
+</pre>
+  </div>
+</div>
+{% endblock %}
